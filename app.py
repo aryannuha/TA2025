@@ -153,6 +153,9 @@ def update_historical_graph(filter_value):
     try:
         response = requests.get(apps_script_url)
 
+        # print("Status Code:", response.status_code)
+        # print("Response JSON:", response.text)  # Debugging
+
         if response.status_code != 200:
             print("Error: Tidak dapat mengambil data dari Google Sheets.")
             return go.Figure()
@@ -194,7 +197,9 @@ def update_historical_graph(filter_value):
         }
 
         if filter_value in filter_map:
-            df = df[df['Timestamp'] > now - filter_map[filter_value]]
+            filter_time = now - filter_map[filter_value]
+            # print(f"Filter dari: {filter_time}")
+            df = df[df['Timestamp'] < filter_time]
 
         # print("Jumlah data setelah filter:", len(df))
         
