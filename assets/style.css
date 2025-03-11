@@ -76,7 +76,22 @@ h1 {
     text-align: center;
 }
 
-/* Tombol */
+/* Tombol Historical Trend */
+.btn-his {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-his:hover {
+    background-color: #0056b3;
+}
+
+/* Tombol PAR */
 .btn-par {
     padding: 10px 20px;
     background-color: #007bff;
@@ -89,6 +104,49 @@ h1 {
 
 .btn-par:hover {
     background-color: #0056b3;
+}
+
+/* Modal */
+.modal {
+    display: flex; /* Gunakan flexbox untuk posisi tengah */
+    align-items: center; /* Posisi vertikal tengah */
+    justify-content: center; /* Posisi horizontal tengah */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Konten Modal */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    width: 50%;
+    max-width: 600px;
+    position: absolute; /* Gunakan absolute untuk memastikan tengah */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Pastikan modal tetap di tengah */
+}
+
+/* Tombol Close */
+.close-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+
+.close-btn:hover {
+    background-color: darkred;
 }
 
 /* Responsive Mobile */
@@ -120,6 +178,12 @@ h1 {
 
     .btn-par {
         order: 5;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn-his {
+        order: 6;
         width: 100%;
         text-align: center;
     }
