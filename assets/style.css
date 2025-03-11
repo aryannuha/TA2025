@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Container utama dengan Flexbox */
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+    margin: auto;
+    gap: 20px;
+}
+
+/* Panel kiri */
+.left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Panel kanan */
+.right-panel {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Data Box */
+.data-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.data-box {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Tabel dengan batas 10 data + Scroll */
+.table-container {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.data-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Tombol */
+.btn-par {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-par:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Mobile */
+@media screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .right-panel {
+        order: 1;
+        flex-grow: 1; /* Biarkan panel ini memenuhi space yang tersedia */
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    
+    .data-item:first-child {
+        order: 2;
+    }
+
+    .data-item:nth-child(2) {
+        order: 3;
+    }
+
+    .table-container {
+        order: 4;
+        width: 100%;
+    }
+
+    .btn-par {
+        order: 5;
+        width: 100%;
+        text-align: center;
+    }
+}
