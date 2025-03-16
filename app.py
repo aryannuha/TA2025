@@ -173,7 +173,7 @@ def update_historical_graph(filter_value):
         if filter_value in filter_map:
             filter_time = now - filter_map[filter_value]
             # print(f"Filter dari: {filter_time}")
-            df = df[df['Timestamp'] < filter_time]
+            df = df[df['Timestamp'] >= filter_time]
 
         # print("Jumlah data setelah filter:", len(df))
         
