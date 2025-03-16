@@ -6,9 +6,14 @@ import pandas as pd
 import plotly.graph_objs as go
 import threading
 import requests
+from pages.th import th_layout
+from pages.par import par_layout
+from pages.windspeed import windspeed_layout
+from pages.rainfall import rainfall_layout
+from pages.co2 import co2_layout
 
 # Inisialisasi Dash
-app = dash.Dash(__name__, external_stylesheets=['/assets/style.css'], title="Dashboard Microclimate")
+app = dash.Dash(__name__, external_stylesheets=['/assets/style.css'], title="Dashboard Microclimate", suppress_callback_exceptions=True)
 server = app.server
 
 # Data Storage
@@ -66,73 +71,43 @@ threading.Thread(target=client.loop_forever, daemon=True).start()
 
 # Layout Dashboard
 app.layout = html.Div([
-    html.H1("DASHBOARD MONITORING MICROCLIMATE"),
-
+    dcc.Location(id='url', refresh=False),
     html.Div([
-        # Bagian kiri
+        html.H1("DASHBOARD MONITORING MICROCLIMATE", style={'color': 'white'}),
         html.Div([
-            html.Div([
-                html.Img(src='/assets/img/thermometer.png', className='icon'),
-                html.Div(id='suhu-display', className='data-box')
-            ],className='data-item'),
+            dcc.Link('T&H', href='/'),
+            dcc.Link('PAR', href='/par'),
+            dcc.Link('Windspeed', href='/windspeed'),
+            dcc.Link('Rainfall', href='/rainfall'),
+            dcc.Link('CO2', href='/co2'),
+        ], className='nav-links'),
+    ], className='header'),
 
-            html.Div([
-                html.Img(src='/assets/img/humidity.png', className='icon'),
-                html.Div(id='kelembaban-display', className='data-box')
-            ],className='data-item'),
-
-            html.Div([
-                html.Table([
-                    html.Thead([
-                        html.Tr([html.Th("Waktu"), html.Th("Suhu (°C)"), html.Th("Kelembaban (%)")])
-                    ]),
-                    html.Tbody(id='table-body')
-                ], className='data-table'),
-            ], className='table-container'),
-
-            html.Button("Historical Trend", id='btn-his', className='btn-his'),
-
-            html.Button("Move to PAR", id='btn-par', className='btn-par'),
-        ], className='left-panel'),
-
-        # Bagian kanan (grafik)
-        html.Div([
-            dcc.Graph(id='suhu-graph', className='grafik'),
-            dcc.Graph(id='kelembaban-graph', className='grafik'),
-        ], className='right-panel'),
-
-    ], className='main-container'),
-
-    # Historical Trend Modal
-    html.Div([
-        html.Div([
-            html.H2("Historical Trend"),
-            dcc.Dropdown(
-                id='filter-dropdown',
-                options=[
-                    {'label': 'Jam', 'value': 'hour'},
-                    {'label': 'Hari', 'value': 'day'},
-                    {'label': 'Minggu', 'value': 'week'},
-                    {'label': 'Bulan', 'value': 'month'}
-                ],
-                value='hour'
-            ),
-            dcc.Graph(id='historical-graph'),
-            html.Button("Close", id='close-modal', className='close-btn')
-        ], className='modal-content')
-    ], id='modal', className='modal', style={'display': 'none'}),
-
-    dcc.Interval(id='interval', interval=2000, n_intervals=0)
+    html.Div(id='page-content')
 ])
 
-# Callback Historical Trend
+# Update page content based on URL
+@app.callback(Output('page-content', 'children'),
+              [Input('url', 'pathname')])
+def display_page(pathname):
+    if pathname == '/par':
+        return par_layout
+    elif pathname == '/windspeed':
+        return windspeed_layout
+    elif pathname == '/rainfall':
+        return rainfall_layout
+    elif pathname == '/co2':
+        return co2_layout
+    else:
+        return th_layout
+
+# Callback Show Historical Trend
 @app.callback(
     Output('modal', 'style'),
     [Input('btn-his', 'n_clicks'), Input('close-modal','n_clicks')],
     [State('modal','style')]
 )
-
-# Pop up modal
+# Pop up modal Historical Trend
 def toggle_modal(btn_open, btn_close, style):
     ctx = dash.callback_context
     if not ctx.triggered:
@@ -147,7 +122,6 @@ def toggle_modal(btn_open, btn_close, style):
     Output('historical-graph', 'figure'),
     [Input('filter-dropdown', 'value')]
 )
-
 # Update historical trend
 def update_historical_graph(filter_value):
     try:
@@ -241,20 +215,19 @@ def update_historical_graph(filter_value):
      Output('table-body', 'children')],
     [Input('interval', 'n_intervals')]
 )
-
 # update dashboard Real Time Trend
 def update_dashboard(n):
     suhu = data['suhu'][-1] if len(data['suhu']) == len(data['waktu']) and data['suhu'] else 0
     kelembaban = data['kelembaban'][-1] if len(data['kelembaban']) == len(data['waktu']) and data['kelembaban'] else 0
 
-    suhu_display = f"Suhu Udara: {suhu}°C"
-    kelembaban_display = f"Kelembapan Udara: {kelembaban}%"
+    suhu_display = f"Temperature: {suhu}°C"
+    kelembaban_display = f"Humidity: {kelembaban}%"
     
     fig_suhu = go.Figure(go.Scatter(x=data['waktu'], y=data['suhu'], mode='lines+markers', name='suhu'))
-    fig_suhu.update_layout(title='Suhu Udara', xaxis_title='Waktu', yaxis_title='Suhu (°C)')
+    fig_suhu.update_layout(title='Temperature', xaxis_title='Time', yaxis_title='Temperature (°C)')
     
     fig_kelembaban = go.Figure(go.Scatter(x=data['waktu'], y=data['kelembaban'], mode='lines+markers', name='kelembaban'))
-    fig_kelembaban.update_layout(title='Kelembaban Udara', xaxis_title='Waktu', yaxis_title='Kelembaban (%)')
+    fig_kelembaban.update_layout(title='Humidity', xaxis_title='Time', yaxis_title='Humidity (%)')
     
     table_rows = [html.Tr([html.Td(w), html.Td(s), html.Td(k)]) 
               for w, s, k in zip(data['waktu'], data['suhu'], data['kelembaban'])]

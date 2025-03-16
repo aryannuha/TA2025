@@ -11,6 +11,36 @@ h1 {
     margin-top: 20px;
 }
 
+/* Header */
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.nav-links a {
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.nav-links a:hover {
+    background-color: #575757;
+}
+
 /* Container utama dengan Flexbox */
 .main-container {
     display: flex;
@@ -19,6 +49,7 @@ h1 {
     width: 90%;
     margin: auto;
     gap: 20px;
+    padding-top: 20px;
 }
 
 /* Panel kiri */
@@ -88,21 +119,6 @@ h1 {
 }
 
 .btn-his:hover {
-    background-color: #0056b3;
-}
-
-/* Tombol PAR */
-.btn-par {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.btn-par:hover {
     background-color: #0056b3;
 }
 
