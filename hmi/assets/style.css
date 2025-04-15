@@ -1,0 +1,113 @@
+/* Navbar full width dan tengah */
+.navbar-full {
+    width: 100%;
+    background-color: white;
+}
+
+.navbar-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.notification-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Parameter card styling */
+.param-card {
+    background-color: #f8f9fa;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.param-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.param-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.param-icon-large {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.param-icon-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.param-value {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+/* Alarm dot dan label di bawah */
+.alarm-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin: 0 auto 0.25rem auto;
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.green {
+    background-color: green;
+}
+
+/* Greenhouse image styling */
+.greenhouse-img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+/* Table styling */
+.data-table {
+    background-color: white;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* Button layout */
+.btn {
+    padding: 10px 20px;
+    font-weight: 500;
+    border-radius: 10px;
+}
+
+/* Grid bottom spacing */
+.bottom-grid-col {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+    margin: 0 0.15rem;
+    flex: 1;
+}
